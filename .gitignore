@@ -1,2 +1,2 @@
-/index.php
-/vendor
+vendor
+.phpunit.result.cache

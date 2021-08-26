@@ -19,9 +19,9 @@ class FoyerFiscalTest extends TestCase
 
         $this->assertEquals($model->getNumeroFiscal(), 'test');
         $this->assertEquals($model->getAdresse()[0], 'test');
-        $this->assertEquals($model->getDeclarants(), 'test');
+        $this->assertTrue(\is_array($model->getDeclarants()));
         $this->assertTrue(\current($model->getDeclarants()) instanceof Declarant);
-        $this->assertTrue($model->getAvis() instanceof Avis);
+        $this->assertInstanceOf(Avis::class, $model->getAvis());
     }
 
 }

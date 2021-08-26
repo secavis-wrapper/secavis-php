@@ -9,7 +9,8 @@ class RequestTest extends TestCase
 {
     public function testSend(): void
     {
-        $this->assertInstanceOf(\DOMDocument::class, Request::send('test', 'test', 'test'));
+        $this->expectException(\Exception::class);
+        Request::send('test', 'test', 'test');
     }
 
 }

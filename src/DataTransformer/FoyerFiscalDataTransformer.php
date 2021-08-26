@@ -8,13 +8,13 @@ use SecavisWrapper\SecavisPHP\Model\FoyerFiscal;
 
 abstract class FoyerFiscalDataTransformer
 {
-    public static function fromArray(array $data): FoyerFiscal
+    public static function fromArray(array $data = [], ?string $numeroFiscal = null, ?string $referenceAvis = null): FoyerFiscal
     {
-        $model = new FoyerFiscal();
+        $model = (new FoyerFiscal())->setNumeroFiscal($numeroFiscal);
 
         self::setAdresse($model, $data);
         self::setDeclarants($model, $data);
-        self::setAvis($model, $data);
+        self::setAvis($model, $data, $referenceAvis);
 
         return $model;
     }
@@ -44,10 +44,11 @@ abstract class FoyerFiscalDataTransformer
         return $model;
     }
 
-    private static function setAvis(FoyerFiscal $model, array $data): FoyerFiscal
+    private static function setAvis(FoyerFiscal $model, array $data, ?string $reference): FoyerFiscal
     {
         if (\array_key_exists('avis', $data) && \is_array($data['avis'])) {
             $avis = (new Avis())
+                ->setReference($reference)
                 ->setDateRecouvrement($data['avis']['dateRecouvrement'] ?? null)
                 ->setDateEtablissement($data['avis']['dateEtablissement'] ?? null)
                 ->setParts($data['avis']['parts'] ?? null)

@@ -215,7 +215,7 @@ class Avis
 
     public function getAnnee(): ?string
     {
-        if ($this->reference && \strlen($this->reference) >= 2 && \preg_match('^[0-9]*$', \substr($this->reference, 0, 2))) {
+        if ($this->reference && \strlen($this->reference) >= 2 && \preg_match('/^[0-9]*$/', \substr($this->reference, 0, 2))) {
             return '20' . \substr($this->reference, 0, 2);
         }
         return null;

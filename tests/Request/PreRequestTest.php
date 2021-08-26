@@ -9,7 +9,7 @@ class PreRequestTest extends TestCase
 {
     public function testSend(): void
     {
-        $this->assertInstanceOf(\DOMDocument::class, PreRequest::send('test', 'test', 'test'));
+        $this->assertTrue(\is_string(PreRequest::send('test', 'test', 'test')));
     }
 
 }

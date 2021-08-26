@@ -20,7 +20,7 @@ abstract class Request
         ]
     ];
 
-    public static function send(string $numeroFiscal, string $referenceAvis, string $viewState): \DOMDocument
+    public static function send(string $numeroFiscal, string $referenceAvis, string $viewState): ?string
     {
         $options = self::OPTIONS;
         $options['http']['content'] = http_build_query([
@@ -31,16 +31,14 @@ abstract class Request
             'j_id_7:j_id_l' => 'Valider'
         ]);
 
-        $context  = stream_context_create($options);
-        $response = file_get_contents(self::URL, false, $context);
+        try {
+            $context  = stream_context_create($options);
+            $response = file_get_contents(self::URL, false, $context);
 
-        if (!$response) {
+            return $response;
+        } catch (\Throwable $th) {
             throw new \Exception('Echec de la requête');
         }
-        $dom = new \DOMDocument();
-        $dom->loadHTML($response);
-
-        return $dom;
     } 
 
 }

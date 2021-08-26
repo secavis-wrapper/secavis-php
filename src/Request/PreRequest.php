@@ -18,18 +18,19 @@ abstract class PreRequest
         ]
     ];
 
-    public static function send(): \DOMDocument
+    public static function send(): ?string
     {
         $context  = stream_context_create(self::OPTIONS);
         $response = file_get_contents(self::URL, false, $context);
 
-        if (!$response) {
+        try {
+            $context  = stream_context_create(self::OPTIONS);
+            $response = file_get_contents(self::URL, false, $context);
+
+            return $response;
+        } catch (\Throwable $th) {
             throw new \Exception('Echec de la requête');
         }
-        $dom = new \DOMDocument();
-        $dom->loadHTML($response);
-
-        return $dom;
     } 
 
 }
